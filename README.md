@@ -1,70 +1,71 @@
 # CoolingTower-Robust-Optimization
 
-基于论文《基于HOA的建筑集中空调系统冷却塔出水温度优化控制研究》图8a的复现与鲁棒优化扩展。
+**A Reproducible Study on Cooling Tower Outlet Temperature and Total Power Consumption**
 
-## 项目简介
+Author: J. Lyu
+Date: September 2026
 
-本项目分为三个递进层次：
+## 1. Project Overview
 
-1. 确定性拟合：复现论文图8a中"冷却塔出水温度设定值与总能耗"的关系曲线
-2. 蒙特卡洛模拟：分析外界气温波动下最优设定值的稳定性
-3. 鲁棒优化：引入风险调整（Mean + lambda*Std）和 Minimax Regret，寻找抗干扰的保守最优值
+This project serves as an academic reproduction and extension of Figure 8a from the paper:
+*"Research on Optimal Control of Cooling Tower Outlet Temperature in Central Air-Conditioning Systems Based on HOA"*
 
-## 核心结论
+Beyond the basic deterministic curve fitting, this project introduces **Monte Carlo simulations** and **Robust Optimization** techniques to investigate the stability of the optimal setpoint under ambient temperature fluctuations.
 
-| 优化视角 | 最优温度 | 平均能耗 | 说明 |
+## 2. Methodology & Workflow
+
+The project is structured into three progressive phases:
+
+### Phase 1: Deterministic Fitting (Reproduction)
+- Extracted 4 key data points from Figure 8a (T = 30, 31, 32, 33 °C).
+- Fitted a quadratic polynomial: `y = -0.125x^2 + 9.025x - 50.225`.
+- Verified that total power consumption strictly increases with temperature.
+
+### Phase 2: Monte Carlo Simulation (Uncertainty Analysis)
+- Introduced Gaussian noise (`sigma = 1.5 kW`) to simulate ambient temperature fluctuations.
+- Conducted 5,000 simulations to observe the distribution of the optimal setpoint.
+- Result: The deterministic optimum (30 °C) is highly sensitive to noise.
+
+### Phase 3: Robust Optimization (Risk Aversion & Minimax Regret)
+- **Risk-adjusted cost**: `J = mu + lambda * sigma`, where `mu` is mean power, `sigma` is standard deviation.
+- **Minimax Regret**: Minimized the worst-case loss.
+- Found that shifting the setpoint to **30.8~31.0 °C** provides a better trade-off between energy consumption and stability.
+
+## 3. Key Results
+
+| Optimization Criterion | Optimal Setpoint | Average Power | Remarks |
 | :--- | :--- | :--- | :--- |
-| 传统确定性 | 30.0 C | 108.02 kW | 理想模型下最省电 |
-| 鲁棒推荐 | 30.8~31.0 C | 108.8~109.1 kW | 牺牲约1kW，换取稳定性 |
-| Minimax Regret | 31.0 C | 109.10 kW | 保证最坏情况下不吃大亏 |
+| Deterministic Optimum | 30.0 °C | 108.02 kW | Ideal model, most efficient |
+| Robust Candidate | 30.8 ~ 31.0 °C | 108.8 ~ 109.1 kW | Sacrifices ~1 kW for stability |
+| Minimax Regret | 31.0 °C | 109.10 kW | Ensures worst-case protection |
 
-## 环境要求
+## 4. File Structure
 
-- GNU Octave 7.0+ 或 MATLAB R2020a+
+```text
+CoolingTower-Robust-Optimization/
+├── src/
+│   ├── step1_deterministic_fit.m      # Step 1: Deterministic fitting (reproduction)
+│   ├── step2_monte_carlo_analysis.m   # Step 2: Monte Carlo uncertainty analysis
+│   ├── step3_robust_optimization.m    # Step 3: Robust optimization (Risk & Minimax Regret)
+│   └── run_all.m                      # One-click execution script
+├── data/
+│   └── fig8a_data.txt                 # Original data points from the paper
+├── results/figures/                   # Output figures
+├── docs/                              # Methodological documentation
+└── README.md
+5. Requirements
+GNU Octave 7.0+ or MATLAB R2020a+ (No external toolbox required for basic 5 figures)
+6. How to Run
+git clone https://github.com/LV-ship-123/CoolingTower-Robust-Optimization.git
+cd CoolingTower-Robust-Optimization
+# In Octave/MATLAB command window:
+run('src/run_all.m')
+7. Future Work
+Extend to time-varying wet-bulb temperature (dynamic optimization).
 
-## 快速开始
+Connect with EnergyPlus for real building load data.
 
-在 Octave/MATLAB 中运行：
+Replace penalty with multi-objective optimization (Pareto front).
 
-    cd CoolingTower-Robust-Optimization
-    run('src/run_all.m')
-
-## 文件结构
-
-    CoolingTower-Robust-Optimization/
-    ├── src/
-    │   ├── step1_deterministic_fit.m      # 确定性拟合（复现论文图8a）
-    │   ├── step2_monte_carlo_analysis.m   # 蒙特卡洛稳定性分析
-    │   ├── step3_robust_optimization.m    # 鲁棒优化
-    │   └── run_all.m                      # 一键运行
-    ├── data/
-    │   └── fig8a_data.txt                 # 论文原始数据点
-    ├── results/figures/                   # 输出图片
-    ├── docs/                              # 方法论文档
-    └── README.md
-
-## 方法论
-
-### 确定性拟合
-
-使用二次多项式拟合论文图8a提取的4个数据点：
-
-    y = -0.125x^2 + 9.025x - 50.225
-
-### 鲁棒优化（风险调整）
-
-引入风险厌恶系数 lambda，目标函数重构为：
-
-    J = mu + lambda * sigma
-
-其中 mu 为平均能耗，sigma 为标准差。lambda 越大，越倾向于选择波动小的设定值。
-
-### Minimax Regret
-
-最小化最坏情况下的后悔损失：
-
-    min_x max_epsilon [ f(x, epsilon) - min_x' f(x', epsilon) ]
-
-## 许可证
-
-MIT License
+8. License
+Academic and research purposes only.
