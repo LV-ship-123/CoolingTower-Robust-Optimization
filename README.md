@@ -2,7 +2,7 @@
 
 **A Reproducible Study on Cooling Tower Outlet Temperature and Total Power Consumption**
 
-> Author: june
+> Author: june 
 > Date: September 2026
 
 ---
@@ -57,11 +57,13 @@ CoolingTower-Robust-Optimization/
 GNU Octave 7.0+ or MATLAB R2020a+
 
 (No external toolbox required for basic 5 figures)
+
 6. How to Run
 git clone https://github.com/LV-ship-123/CoolingTower-Robust-Optimization.git
 cd CoolingTower-Robust-Optimization
 In Octave/MATLAB command window:
 run('src/run_all.m')
+
 7. Future Work
 Extend to time-varying wet-bulb temperature (dynamic optimization).
 
