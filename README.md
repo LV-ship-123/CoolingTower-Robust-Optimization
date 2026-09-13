@@ -2,13 +2,14 @@
 
 **A Reproducible Study on Cooling Tower Outlet Temperature and Total Power Consumption**
 
-Author: J. Lyu
-Date: September 2026
+> Author: june
+> Date: September 2026
+
+---
 
 ## 1. Project Overview
 
-This project serves as an academic reproduction and extension of Figure 8a from the paper:
-*"Research on Optimal Control of Cooling Tower Outlet Temperature in Central Air-Conditioning Systems Based on HOA"*
+This project serves as an academic reproduction and extension of Figure 8a from the paper *"Research on Optimal Control of Cooling Tower Outlet Temperature in Central Air-Conditioning Systems Based on HOA"*.
 
 Beyond the basic deterministic curve fitting, this project introduces **Monte Carlo simulations** and **Robust Optimization** techniques to investigate the stability of the optimal setpoint under ambient temperature fluctuations.
 
@@ -27,9 +28,9 @@ The project is structured into three progressive phases:
 - Result: The deterministic optimum (30 °C) is highly sensitive to noise.
 
 ### Phase 3: Robust Optimization (Risk Aversion & Minimax Regret)
-- **Risk-adjusted cost**: `J = mu + lambda * sigma`, where `mu` is mean power, `sigma` is standard deviation.
+- **Risk-adjusted cost**: `J = mu + lambda * sigma`.
 - **Minimax Regret**: Minimized the worst-case loss.
-- Found that shifting the setpoint to **30.8~31.0 °C** provides a better trade-off between energy consumption and stability.
+- Found that shifting the setpoint to **30.8~31.0 °C** provides a better trade-off.
 
 ## 3. Key Results
 
@@ -44,21 +45,22 @@ The project is structured into three progressive phases:
 ```text
 CoolingTower-Robust-Optimization/
 ├── src/
-│   ├── step1_deterministic_fit.m      # Step 1: Deterministic fitting (reproduction)
-│   ├── step2_monte_carlo_analysis.m   # Step 2: Monte Carlo uncertainty analysis
-│   ├── step3_robust_optimization.m    # Step 3: Robust optimization (Risk & Minimax Regret)
+│   ├── step1_deterministic_fit.m      # Step 1: Deterministic fitting
+│   ├── step2_monte_carlo_analysis.m   # Step 2: Monte Carlo analysis
+│   ├── step3_robust_optimization.m    # Step 3: Robust optimization
 │   └── run_all.m                      # One-click execution script
 ├── data/
-│   └── fig8a_data.txt                 # Original data points from the paper
+│   └── fig8a_data.txt                 # Original data points from paper
 ├── results/figures/                   # Output figures
-├── docs/                              # Methodological documentation
 └── README.md
 5. Requirements
-GNU Octave 7.0+ or MATLAB R2020a+ (No external toolbox required for basic 5 figures)
+GNU Octave 7.0+ or MATLAB R2020a+
+
+(No external toolbox required for basic 5 figures)
 6. How to Run
 git clone https://github.com/LV-ship-123/CoolingTower-Robust-Optimization.git
 cd CoolingTower-Robust-Optimization
-# In Octave/MATLAB command window:
+In Octave/MATLAB command window:
 run('src/run_all.m')
 7. Future Work
 Extend to time-varying wet-bulb temperature (dynamic optimization).
