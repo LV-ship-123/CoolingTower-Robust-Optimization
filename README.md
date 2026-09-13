@@ -61,12 +61,17 @@ GNU Octave 7.0+ or MATLAB R2020a+
 (No external toolbox required for basic 5 figures)
 
 ##6. How to Run
+
 git clone https://github.com/LV-ship-123/CoolingTower-Robust-Optimization.git
+
 cd CoolingTower-Robust-Optimization
+
 In Octave/MATLAB command window:
+
 run('src/run_all.m')
 
 ##7. Future Work
+
 Extend to time-varying wet-bulb temperature (dynamic optimization).
 
 Connect with EnergyPlus for real building load data.
@@ -74,4 +79,5 @@ Connect with EnergyPlus for real building load data.
 Replace penalty with multi-objective optimization (Pareto front).
 
 ##8. License
+
 Academic and research purposes only.
